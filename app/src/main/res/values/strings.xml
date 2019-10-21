@@ -3,4 +3,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Income</string>
     <string name="title_notifications">Expense</string>
+    <string name="add_income">Add Income</string>
+    <string name="add_expense">Add Expense</string>
+    <string name="title">Title</string>
+    <string name="cancel">Cancel</string>
 </resources>
