@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.budgetx.R;
+import com.example.budgetx.ui.ExpenseBottomSheet;
 
 public class NotificationsFragment extends Fragment {
 
@@ -30,6 +32,17 @@ public class NotificationsFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        final ExpenseBottomSheet expenseSheet = new ExpenseBottomSheet();
+        Button addExp = root.findViewById(R.id.exp);
+
+        addExp.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                expenseSheet.show(getFragmentManager(),"BottomSheet");
+            }
+        });
+
         return root;
     }
 }

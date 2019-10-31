@@ -17,44 +17,71 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="70sp" />
 
-    <TextView
-        android:id="@+id/Title"
+    <Spinner
+        android:id="@+id/spinner"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_weight="1"
-        android:text="@string/title"
-        android:textSize="25sp" />
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"/>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/editText"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/title"
-        android:textSize="25sp" />
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/freq" />
 
-    <TextView
-        android:id="@+id/textView5"
+    <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_weight="1"
-        android:text="@string/title"
-        android:textSize="25sp" />
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
 
-    <TextView
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/OneTime" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Daily" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Weekly" />
+
+        <RadioButton
+            android:id="@+id/radioButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Monthly" />
+    </RadioGroup>
+
+    <EditText
         android:id="@+id/textView6"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="60dp"
         android:layout_weight="1"
-        android:text="@string/title"
+        android:hint="@string/amount"
+        android:inputType="number"
         android:textSize="25sp" />
 
-    <TextView
+    <EditText
         android:id="@+id/textView7"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="60dp"
         android:layout_weight="1"
-        android:text="@string/title"
+        android:hint="@string/description"
         android:textSize="25sp" />
 
     <Button

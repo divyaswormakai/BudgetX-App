@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.budgetx.R;
 import com.example.budgetx.ui.ExpenseBottomSheet;
 import com.example.budgetx.ui.IncomeBottomSheet;
+import com.example.budgetx.ui.MainBottomSheet;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class HomeFragment extends BottomSheetDialogFragment {
@@ -43,21 +44,13 @@ public class HomeFragment extends BottomSheetDialogFragment {
             }
         });
 
-        Button addInc = (Button) root.findViewById(R.id.inc);
-        Button addExp = (Button) root.findViewById(R.id.exp);
-        addInc.setOnClickListener(new View.OnClickListener() {
+        Button addTrans = (Button) root.findViewById(R.id.transaction);
+
+        addTrans.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                IncomeBottomSheet incomesheet = new IncomeBottomSheet();
-                incomesheet.show(getFragmentManager(),"BottomSheet");
-            }
-        });
-
-        addExp.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                ExpenseBottomSheet expensesheet = new ExpenseBottomSheet();
-                expensesheet.show(getFragmentManager(),"BottomSheet");
+                MainBottomSheet mainsheet = new MainBottomSheet();
+                mainsheet.show(getFragmentManager(),"BottomSheet");
             }
         });
 

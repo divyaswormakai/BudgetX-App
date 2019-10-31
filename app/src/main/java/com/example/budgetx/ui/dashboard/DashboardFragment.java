@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.budgetx.R;
+import com.example.budgetx.ui.IncomeBottomSheet;
 
 public class DashboardFragment extends Fragment {
 
@@ -24,10 +26,20 @@ public class DashboardFragment extends Fragment {
                 ViewModelProviders.of(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
+        Button addInc = (Button) root.findViewById(R.id.inc);
+
         dashboardViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
+            }
+        });
+
+        addInc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IncomeBottomSheet incomesheet = new IncomeBottomSheet();
+                incomesheet.show(getFragmentManager(),"BottomSheet");
             }
         });
         return root;

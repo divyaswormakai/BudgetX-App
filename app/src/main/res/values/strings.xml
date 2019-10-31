@@ -5,6 +5,27 @@
     <string name="title_notifications">Expense</string>
     <string name="add_income">Add Income</string>
     <string name="add_expense">Add Expense</string>
+    <string name="add_transcation">Add A Transaction</string>
     <string name="title">Title</string>
     <string name="cancel">Cancel</string>
+    <string-array name="income_categories">
+        <item>Salary</item>
+        <item>Allowance</item>
+        <item>Interests</item>
+        <item>Miscellaneous</item>
+    </string-array>
+    <string-array name="expense_categories">
+        <item>Food</item>
+        <item>Entertainment</item>
+        <item>Clothing</item>
+        <item>Rent</item>
+        <item>Miscellaneous</item>
+    </string-array>
+    <string name="freq">Frequency of transaction</string>
+    <string name="OneTime">One Time</string>
+    <string name="Daily">Daily</string>
+    <string name="Weekly">Weekly</string>
+    <string name="Monthly">Monthly</string>
+    <string name="amount">Amount</string>
+    <string name="description">Description(optional...)</string>
 </resources>
