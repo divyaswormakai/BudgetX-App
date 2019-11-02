@@ -25,7 +25,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        String createTable = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+" (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, "+TRANSACTION_CATEGORY_ID+" INT)";
+        String createTable = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+" (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, "+TRANSACTION_CATEGORY_ID+" INT," +
+                CATEGORY_ID + " INT,"+ FREQUENCY_ID + " INT,"+AMOUNT+ " FLOAT," +  DESCRIPTION+ " TEXT)";
         db.execSQL(createTable);
     }
 
@@ -41,8 +42,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()) {
             int result_0 = cursor.getInt(0);
-            String result_1 = cursor.getString(1);
-            result += String.valueOf(result_0) + " " + result_1 +
+            int result_1 = cursor.getInt(1);
+            result += String.valueOf(result_0) + " " + String.valueOf(result_1) +
                     System.getProperty("line.separator");
         }
         cursor.close();
@@ -87,7 +88,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         Transaction transaction = new Transaction();
         if (cursor.moveToFirst()) {
-            transaction.SetTranscationID(Integer.parseInt(cursor.getString(0)));
+            transaction.SetTransactionID(Integer.parseInt(cursor.getString(0)));
             db.delete(TABLE_NAME, TRANSACTION_ID + "=?",
                     new String[] {
                 String.valueOf(transaction.GetTransactionID())

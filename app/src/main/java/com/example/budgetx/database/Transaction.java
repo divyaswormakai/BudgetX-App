@@ -12,8 +12,8 @@ public class Transaction {
 
     }
 
-    public Transaction(int transactioncat,int catID, int frequencyID, float amt,String descp){
-        this.transactionCategoryID = transactioncat;
+    public Transaction(int transactionCat,int catID, int frequencyID, float amt,String descp){
+        this.transactionCategoryID = transactionCat;
         this.categoryID = catID;
         this.frequencyID = frequencyID;
         this.amount = amt;
@@ -29,7 +29,7 @@ public class Transaction {
         this.description = description;
     }
 
-    public void SetTranscationID(int id){
+    public void SetTransactionID(int id){
         this.transactionID = id;
     }
 
