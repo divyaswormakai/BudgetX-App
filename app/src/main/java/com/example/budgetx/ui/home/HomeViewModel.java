@@ -9,9 +9,14 @@ import androidx.lifecycle.ViewModel;
 import com.example.budgetx.database.MyDBHandler;
 import com.example.budgetx.database.Transaction;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class HomeViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
+    private Calendar calendar;
 
     public HomeViewModel() {
         mText = new MutableLiveData<>();
@@ -28,12 +33,15 @@ public class HomeViewModel extends ViewModel {
     }
     public void AddTest(View view){
         MyDBHandler db = new MyDBHandler(view.getContext(),null);
-        int type = 1;
-        int cat = 1;
-        int freq = 1;
+        String type = "Income";
+        String cat = "Salary";
+        String freq = "One Time";
         float amt =555;
         String desc = "YES";
-        Transaction trans = new Transaction(type,cat,freq,amt,desc);
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        String formattedDate = simpleDateFormat.format(c);
+        Transaction trans = new Transaction(type,cat,freq,amt,desc,formattedDate);
         db.addHandler(trans);
     }
 }

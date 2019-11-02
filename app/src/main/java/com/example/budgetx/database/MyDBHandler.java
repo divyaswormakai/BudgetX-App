@@ -17,6 +17,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String FREQUENCY_ID = "frequency_id";
     public static final String AMOUNT = "amount";
     public static final String DESCRIPTION = "description";
+    public static final String ENTRYDATE = "entry_date";
 
     public MyDBHandler(Context context, SQLiteDatabase.CursorFactory factory){
 
@@ -25,8 +26,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        String createTable = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+" (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, "+TRANSACTION_CATEGORY_ID+" INT," +
-                CATEGORY_ID + " INT,"+ FREQUENCY_ID + " INT,"+AMOUNT+ " FLOAT," +  DESCRIPTION+ " TEXT)";
+        String createTable = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+" (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, "+TRANSACTION_CATEGORY_ID+" TEXT," +
+                CATEGORY_ID + " TEXT,"+ FREQUENCY_ID + " TEXT,"+AMOUNT+ " FLOAT," +  DESCRIPTION+ " TEXT,"+ENTRYDATE+" TEXT)";
         db.execSQL(createTable);
     }
 
@@ -42,8 +43,13 @@ public class MyDBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()) {
             int result_0 = cursor.getInt(0);
-            int result_1 = cursor.getInt(1);
-            result += String.valueOf(result_0) + " " + String.valueOf(result_1) +
+            String result_1 = cursor.getString(1);
+            String result_2 = cursor.getString(2);
+            String result_3 = cursor.getString(3);
+            float result_4 = cursor.getFloat(4);
+            String result_5 = cursor.getString(5);
+            String result_6 = cursor.getString(6);
+            result += result_0 + " " + result_1 +result_2+result_3 + result_4 +result_5+result_6+
                     System.getProperty("line.separator");
         }
         cursor.close();
@@ -58,6 +64,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(FREQUENCY_ID, transaction.GetFrequencyID());
         values.put(AMOUNT, transaction.GetAmount());
         values.put(DESCRIPTION, transaction.GetDescription());
+        values.put(ENTRYDATE, transaction.GetDate());
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_NAME, null, values);
         db.close();
@@ -70,9 +77,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
         Transaction transaction = new Transaction();
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
-            transaction.SetValues(Integer.parseInt(cursor.getString(0)),Integer.parseInt(cursor.getString(1)),
-                    Integer.parseInt(cursor.getString(2)),Integer.parseInt(cursor.getString(3)),
-                    Float.parseFloat(cursor.getString(4)),cursor.getString(5));
+            transaction.SetValues(Integer.parseInt(cursor.getString(0)),cursor.getString(1),
+                    cursor.getString(2),cursor.getString(3),
+                    Float.parseFloat(cursor.getString(4)),cursor.getString(5),
+                    cursor.getString(6));
             cursor.close();
         } else {
             transaction = null;
@@ -100,7 +108,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    public boolean updateHandler(int transactionID, int transactionCategoryID, int categoryID, int frequencyID, float amount, String description){
+    public boolean updateHandler(int transactionID, String transactionCategoryID, String categoryID, String frequencyID, float amount, String description,String dates){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues args = new ContentValues();
         args.put(TRANSACTION_CATEGORY_ID, transactionCategoryID);
@@ -108,6 +116,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         args.put(FREQUENCY_ID, frequencyID);
         args.put(AMOUNT, amount);
         args.put(DESCRIPTION, description);
+        args.put(ENTRYDATE, dates);
 
         return db.update(TABLE_NAME, args, TRANSACTION_ID + "=" + transactionID, null) > 0;
     }
