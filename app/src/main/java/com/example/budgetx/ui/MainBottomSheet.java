@@ -156,4 +156,8 @@ public class MainBottomSheet extends BottomSheetDialogFragment {
 
         }
     }
+
+    public void SetEditableValues(){
+
+    }
 }

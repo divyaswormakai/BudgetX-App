@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.budgetx.R;
+import com.example.budgetx.database.MyDBHandler;
 import com.example.budgetx.ui.ExpenseBottomSheet;
 
 import java.util.List;
@@ -49,7 +51,10 @@ public class NotificationsFragment extends Fragment {
         List transactions = notificationsViewModel.LoadTransactions(root);
         for (Object tempObj  : transactions) {
             String tempString =tempObj.toString();
-            String[] components = tempString.split(",");
+            final String[] components = tempString.split(",");
+
+            LinearLayout ll = new LinearLayout(getContext());
+            ll.setOrientation(LinearLayout.HORIZONTAL);
 
             TextView tempt =  new TextView(getContext());
             tempt.setTextSize(TypedValue.COMPLEX_UNIT_SP,10);
@@ -60,7 +65,31 @@ public class NotificationsFragment extends Fragment {
                 finalStr+=temp+" ";
             }
             tempt.setText(finalStr);
-            linearLayout.addView(tempt);
+
+            Button editBtn = new Button(getContext());
+            editBtn.setText("Edit");
+            editBtn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Toast toast = Toast.makeText(getContext(),components[0].toString(),Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+
+            Button deleteBtn = new Button(getContext());
+            deleteBtn.setText("Delete");
+            deleteBtn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    MyDBHandler db = new MyDBHandler(getContext(), null);
+                    db.deleteHandler(Integer.parseInt(components[0]));
+                    getActivity().recreate();
+                }
+            });
+            ll.addView(tempt);
+            ll.addView(editBtn);
+            ll.addView(deleteBtn);
+            linearLayout.addView(ll);
         }
 
         return root;

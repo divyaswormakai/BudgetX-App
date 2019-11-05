@@ -6,18 +6,21 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyDBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION =1;
     private static final String DATABASE_NAME = "budgetx.db";
 
-    public static final String TABLE_NAME = "transactions";
-    public static final String TRANSACTION_ID = "transcaction_id";
-    public static final String TRANSACTION_CATEGORY_ID = "transaction_category_id";
-    public static final String CATEGORY_ID = "category_id";
-    public static final String FREQUENCY_ID = "frequency_id";
-    public static final String AMOUNT = "amount";
-    public static final String DESCRIPTION = "description";
-    public static final String ENTRYDATE = "entry_date";
+    private static final String TABLE_NAME = "transactions";
+    private static final String TRANSACTION_ID = "transaction_id";
+    private static final String TRANSACTION_CATEGORY_ID = "transaction_category_id";
+    private static final String CATEGORY_ID = "category_id";
+    private static final String FREQUENCY_ID = "frequency_id";
+    private static final String AMOUNT = "amount";
+    private static final String DESCRIPTION = "description";
+    private static final String ENTRYDATE = "entry_date";
 
     public MyDBHandler(Context context, SQLiteDatabase.CursorFactory factory){
 
@@ -36,8 +39,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     }
 
-    public String loadHandler(){
-        String result = "";
+    //make resilt and array and pass that array
+    public List loadHandler(){
+        List result = new ArrayList();
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -49,8 +53,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
             float result_4 = cursor.getFloat(4);
             String result_5 = cursor.getString(5);
             String result_6 = cursor.getString(6);
-            result += result_0 + " " + result_1 +result_2+result_3 + result_4 +result_5+result_6+
-                    System.getProperty("line.separator");
+            String temp =result_0 + "," + result_1 +"," +result_2+"," +result_3 + "," +result_4 +"," +result_5+"," +result_6;
+                    //System.getProperty("line.separator");
+            result.add(temp);
         }
         cursor.close();
         db.close();
@@ -71,7 +76,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     public Transaction findHandler(int transactionID){
-        String query = "Select * FROM " + TABLE_NAME + "WHERE" + TRANSACTION_ID + " = " + "'" + transactionID + "'";
+        String query = "Select * FROM " + TABLE_NAME + " WHERE " + TRANSACTION_ID + " = " + "'" + transactionID + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         Transaction transaction = new Transaction();
@@ -89,9 +94,32 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return transaction;
     }
 
+    //gives income or expense based on the arguments
+    public List findIncExp(String type){
+        List result = new ArrayList();
+        String query = "Select * FROM " + TABLE_NAME + " WHERE " + TRANSACTION_CATEGORY_ID + " = " + "'" + type + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        while (cursor.moveToNext()) {
+            int result_0 = cursor.getInt(0);
+            String result_1 = cursor.getString(1);
+            String result_2 = cursor.getString(2);
+            String result_3 = cursor.getString(3);
+            float result_4 = cursor.getFloat(4);
+            String result_5 = cursor.getString(5);
+            String result_6 = cursor.getString(6);
+            String temp =result_0 + "," + result_1 +"," +result_2+"," +result_3 + "," +result_4 +"," +result_5+"," +result_6;
+            //System.getProperty("line.separator");
+            result.add(temp);
+        }
+        cursor.close();
+        db.close();
+        return result;
+    }
+
     public boolean deleteHandler(int transactionID){
         boolean result = false;
-        String query = "Select*FROM" + TABLE_NAME + "WHERE" + TRANSACTION_ID + "= '" + String.valueOf(transactionID) + "'";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + TRANSACTION_ID + "= " + String.valueOf(transactionID);
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         Transaction transaction = new Transaction();
