@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.budgetx.R;
 import com.example.budgetx.database.MyDBHandler;
+import com.example.budgetx.ui.EditBottomSheet;
 import com.example.budgetx.ui.ExpenseBottomSheet;
 
 import java.util.List;
@@ -71,8 +72,19 @@ public class NotificationsFragment extends Fragment {
             editBtn.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Toast toast = Toast.makeText(getContext(),components[0].toString(),Toast.LENGTH_SHORT);
-                    toast.show();
+                    EditBottomSheet editSheet = new EditBottomSheet();
+                    Bundle args = new Bundle();
+                    args.putString("id",components[0]);
+                    args.putString("type",components[1]);
+                    args.putString("cat",components[2]);
+                    args.putString("freq",components[3]);
+                    args.putString("amt",components[4]);
+                    args.putString("desc",components[5]);
+                    args.putString("entryDate",components[6]);
+                    editSheet.setArguments(args);
+
+                    editSheet.show(getFragmentManager(),"BottomSheet");
+                    Toast.makeText(getContext(),components[1].toString(),Toast.LENGTH_SHORT).show();
                 }
             });
 
