@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -24,6 +23,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.util.List;
 
 public class HomeFragment extends BottomSheetDialogFragment {
+
+    private static Boolean didAutomate = false;
 
     private ScrollView scroller;
     private LinearLayout linearLayout;
@@ -50,7 +51,14 @@ public class HomeFragment extends BottomSheetDialogFragment {
             }
         });
 
+        //Automate all frequent transactions
+        if(!didAutomate) {
+            homeViewModel.AutomateTransactions(root);
+            didAutomate =true;
+        }
+        //Load all transactions
         List transactions = homeViewModel.LoadTransactions(root);
+
         for (Object tempObj  : transactions) {
             String tempString =tempObj.toString();
             final String[] components = tempString.split(",");
@@ -68,25 +76,30 @@ public class HomeFragment extends BottomSheetDialogFragment {
             }
             tempt.setText(finalStr);
 
-            Button editBtn = new Button(getContext());
-            editBtn.setText("Edit");
-            editBtn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    EditBottomSheet editSheet = new EditBottomSheet();
-                    Bundle args = new Bundle();
-                    args.putString("id",components[0]);
-                    args.putString("type",components[1]);
-                    args.putString("cat",components[2]);
-                    args.putString("freq",components[3]);
-                    args.putString("amt",components[4]);
-                    args.putString("desc",components[5]);
-                    args.putString("entryDate",components[6]);
-                    editSheet.setArguments(args);
+            //If the transaction is calculated transaction then do not make it editable
+            if(!components[3].contains("Automated")){
+                Button editBtn = new Button(getContext());
+                editBtn.setText("Edit");
+                editBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EditBottomSheet editSheet = new EditBottomSheet();
+                        Bundle args = new Bundle();
+                        args.putString("id", components[0]);
+                        args.putString("type", components[1]);
+                        args.putString("cat", components[2]);
+                        args.putString("freq", components[3]);
+                        args.putString("amt", components[4]);
+                        args.putString("desc", components[5]);
+                        args.putString("entryDate", components[6]);
+                        editSheet.setArguments(args);
 
-                    editSheet.show(getFragmentManager(),"BottomSheet");
-                }
-            });
+                        editSheet.show(getFragmentManager(), "BottomSheet");
+                    }
+                });
+
+                ll.addView(editBtn);
+            }
 
             Button deleteBtn = new Button(getContext());
             deleteBtn.setText("Delete");
@@ -98,9 +111,8 @@ public class HomeFragment extends BottomSheetDialogFragment {
                     getActivity().recreate();
                 }
             });
-            ll.addView(tempt);
-            ll.addView(editBtn);
             ll.addView(deleteBtn);
+            ll.addView(tempt);
             linearLayout.addView(ll);
         }
 

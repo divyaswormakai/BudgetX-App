@@ -94,7 +94,7 @@ public class IncomeBottomSheet extends BottomSheetDialogFragment {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
         String formattedDate = simpleDateFormat.format(c);
         if(cat.length()>0 || freq.length() >0 || amt>0){
-            Transaction trans = new Transaction(type,cat,freq,amt,desc,formattedDate);
+            Transaction trans = new Transaction(type,cat,freq,amt,desc,formattedDate,formattedDate);
             db.addHandler(trans);
             dialog.cancel();
         }

@@ -1,6 +1,7 @@
 package com.example.budgetx.ui.home;
 
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -26,6 +27,12 @@ public class HomeViewModel extends ViewModel {
     public List LoadTransactions(View view) {
         MyDBHandler db = new MyDBHandler(view.getContext(), null);
         return(db.loadHandler());
+    }
+
+    public void AutomateTransactions(View view){
+        Toast.makeText(view.getContext(),"ASDFASDF",Toast.LENGTH_SHORT).show();
+//        MyDBHandler db = new MyDBHandler(view.getContext(), null);
+//        db.Automate();
     }
 
 }

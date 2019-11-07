@@ -121,8 +121,10 @@ public class MainBottomSheet extends BottomSheetDialogFragment {
                 Date c = Calendar.getInstance().getTime();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
                 String formattedDate = simpleDateFormat.format(c);
+                //get entryDate from the entryDate text field later
                 if(type.length()>0 || cat.length()>0 || freq.length() >0 || amt>0){
-                    Transaction trans = new Transaction(type,cat,freq,amt,desc,formattedDate);
+//                    Transaction trans = new Transaction(type,cat,freq,amt,desc,entryDate,formattedDate);
+                    Transaction trans = new Transaction(type,cat,freq,amt,desc,formattedDate,formattedDate);
                     db.addHandler(trans);
                     dialog.cancel();
                 }

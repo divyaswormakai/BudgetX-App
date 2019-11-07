@@ -67,25 +67,30 @@ public class DashboardFragment extends Fragment {
             }
             tempt.setText(finalStr);
 
-            Button editBtn = new Button(getContext());
-            editBtn.setText("Edit");
-            editBtn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    EditBottomSheet editSheet = new EditBottomSheet();
-                    Bundle args = new Bundle();
-                    args.putString("id",components[0]);
-                    args.putString("type",components[1]);
-                    args.putString("cat",components[2]);
-                    args.putString("freq",components[3]);
-                    args.putString("amt",components[4]);
-                    args.putString("desc",components[5]);
-                    args.putString("entryDate",components[6]);
-                    editSheet.setArguments(args);
+            //If the transaction is calculated transaction then do not make it editable
+            if(!components[3].contains("Automated")){
+                Button editBtn = new Button(getContext());
+                editBtn.setText("Edit");
+                editBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EditBottomSheet editSheet = new EditBottomSheet();
+                        Bundle args = new Bundle();
+                        args.putString("id", components[0]);
+                        args.putString("type", components[1]);
+                        args.putString("cat", components[2]);
+                        args.putString("freq", components[3]);
+                        args.putString("amt", components[4]);
+                        args.putString("desc", components[5]);
+                        args.putString("entryDate", components[6]);
+                        editSheet.setArguments(args);
 
-                    editSheet.show(getFragmentManager(),"BottomSheet");
-                }
-            });
+                        editSheet.show(getFragmentManager(), "BottomSheet");
+                    }
+                });
+
+                ll.addView(editBtn);
+            }
 
             Button deleteBtn = new Button(getContext());
             deleteBtn.setText("Delete");
@@ -97,9 +102,9 @@ public class DashboardFragment extends Fragment {
                     getActivity().recreate();
                 }
             });
-            ll.addView(tempt);
-            ll.addView(editBtn);
             ll.addView(deleteBtn);
+            ll.addView(tempt);
+
             linearLayout.addView(ll);
         }
         return root;

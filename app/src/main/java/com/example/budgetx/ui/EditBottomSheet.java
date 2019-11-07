@@ -19,7 +19,6 @@ import androidx.annotation.Nullable;
 
 import com.example.budgetx.R;
 import com.example.budgetx.database.MyDBHandler;
-import com.example.budgetx.database.Transaction;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.text.SimpleDateFormat;
@@ -86,7 +85,6 @@ public class EditBottomSheet extends BottomSheetDialogFragment {
                 db.deleteHandler(Integer.parseInt(id));
                 dialog.cancel();
                 getActivity().recreate();
-
             }
         });
 
@@ -125,7 +123,7 @@ public class EditBottomSheet extends BottomSheetDialogFragment {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
                 String formattedDate = simpleDateFormat.format(c);
                 if(type.length()>0 || cat.length()>0 || freq.length() >0 || amt>0){
-                    db.updateHandler(Integer.parseInt(id),type,cat,freq,amt,desc,entryDate);
+                    db.updateHandler(Integer.parseInt(id),type,cat,freq,amt,desc,entryDate,formattedDate);
                     dialog.cancel();
                     getActivity().recreate();
                 }
@@ -139,8 +137,6 @@ public class EditBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void SetEditableValues(){
-        Toast.makeText(getContext(),type+id+cat+freq+amt,Toast.LENGTH_LONG).show();
-
         //setting value of the title
         title.setText(type);
 

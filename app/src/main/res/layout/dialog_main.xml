@@ -111,16 +111,24 @@
     </RadioGroup>
 
     <EditText
+        android:id="@+id/entryDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Date of transaction"
+        android:inputType="date"
+        app:layout_constraintTop_toBottomOf="@+id/freq" />
+
+    <EditText
         android:id="@+id/amount"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:hint="@string/amount"
         android:inputType="number"
         android:text="0"
         android:textSize="25sp"
-        app:layout_constraintTop_toBottomOf="@+id/freq"
+        app:layout_constraintTop_toBottomOf="@+id/entryDate"
         tools:text="0" />
 
     <EditText
@@ -152,4 +160,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
