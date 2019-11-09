@@ -1,5 +1,6 @@
 package com.example.budgetx.ui;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -22,15 +24,18 @@ import com.example.budgetx.database.Transaction;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
 public class MainBottomSheet extends BottomSheetDialogFragment {
-    Button cancel,addBtn;
+    Button cancel,addBtn,setDate;
     RadioButton inc,exp;
     RadioGroup radioGroup,freqRadio;
     Spinner catSpinner;
-    EditText amtText,description;
+    EditText amtText,description,entryDate;
+    LocalDate today;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,14 +50,22 @@ public class MainBottomSheet extends BottomSheetDialogFragment {
         inc = v.findViewById(R.id.incRadio);
         exp = v.findViewById(R.id.expRadio);
         addBtn = v.findViewById(R.id.add);
+        setDate = v.findViewById(R.id.setDate);
+        entryDate = v.findViewById(R.id.entryDate);
 
         Clickable();
 
+        //set Spinner default value
         ArrayAdapter<CharSequence> adapter;
         adapter = ArrayAdapter.createFromResource(getContext(), R.array.income_categories, R.layout.support_simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         catSpinner.setAdapter(adapter);
 
+        //set Date default value
+        today = LocalDate.now();
+        DateTimeFormatter simpleDateFormat =DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        String todayDate = today.format(simpleDateFormat);
+        entryDate.setText(todayDate);
 
         return v;
     }
@@ -77,6 +90,14 @@ public class MainBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 onRadioButtonClicked(v);
+            }
+        });
+
+        setDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog test = new DatePickerDialog(v.getContext(),myDateListener,today.getYear(),today.getMonthValue()-1,today.getDayOfMonth());
+                test.show();
             }
         });
 
@@ -118,9 +139,7 @@ public class MainBottomSheet extends BottomSheetDialogFragment {
                 }
                 amt = Float.parseFloat(amtText.getText().toString());
                 desc = description.getText().toString();
-                Date c = Calendar.getInstance().getTime();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-                String formattedDate = simpleDateFormat.format(c);
+                String formattedDate = entryDate.getText().toString();
                 //get entryDate from the entryDate text field later
                 if(type.length()>0 || cat.length()>0 || freq.length() >0 || amt>0){
 //                    Transaction trans = new Transaction(type,cat,freq,amt,desc,entryDate,formattedDate);
@@ -157,5 +176,21 @@ public class MainBottomSheet extends BottomSheetDialogFragment {
             }
         }
     }
+
+    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
+            // arg1 = year,arg2 = month,arg3 = day
+            String arg2String =String.valueOf(arg2+1);
+            String arg3String =String.valueOf(arg3);
+            if(arg2+1 <10){
+                arg2String ="0"+arg2String;
+            }
+            if(arg3 <10){
+                arg3String ="0"+arg3String;
+            }
+            entryDate.setText(new StringBuilder().append(arg1).append("/").append(arg2String).append("/").append(arg3String));
+        }
+    };
 
 }

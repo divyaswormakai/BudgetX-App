@@ -112,11 +112,11 @@
 
     <EditText
         android:id="@+id/entryDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="55dp"
         android:ems="10"
-        android:hint="Date of transaction"
         android:inputType="date"
+        app:layout_constraintEnd_toStartOf="@+id/setDate"
         app:layout_constraintTop_toBottomOf="@+id/freq" />
 
     <EditText
@@ -160,5 +160,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add" />
+
+    <Button
+        android:id="@+id/setDate"
+        android:layout_width="109dp"
+        android:layout_height="52dp"
+        android:text="Select Date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/freq" />
+
+    <TextView
+        android:id="@+id/TransactionDate"
+        android:layout_width="176dp"
+        android:layout_height="54dp"
+        android:text="Transaction Date"
+        android:textAlignment="center"
+        android:textSize="21sp"
+        app:layout_constraintEnd_toStartOf="@+id/entryDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/entryDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

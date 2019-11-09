@@ -209,7 +209,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
                         case "Weekly":
                             diff = diffPeriod.getDays();
                             if(diff>=7){
-                                for(int i=0;i<=diff;i+=7){
+                                for(int i=0;i<diff;i+=7){
                                     updateDate = updateDate.plusDays(7);
                                     Transaction tempTransaction = new Transaction(type,cat,freq,amt,desc,updateDate.format(simpleDateFormat),updateDate.format(simpleDateFormat));
                                     addHandler(tempTransaction);
