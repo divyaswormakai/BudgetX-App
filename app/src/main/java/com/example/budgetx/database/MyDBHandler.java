@@ -5,12 +5,24 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.text.format.DateUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Toast;
 
+import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class MyDBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION =1;
@@ -156,7 +168,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return db.update(TABLE_NAME, args, TRANSACTION_ID + "=" + transactionID, null) > 0;
     }
 
-    public void Automate(){
+    public void Automate(View view){
         List transactions = loadHandler();
 
         for (Object transaction:transactions ) {
@@ -164,30 +176,61 @@ public class MyDBHandler extends SQLiteOpenHelper {
             final String[] components = tempString.split(",");
             if(!components[3].contains("One Time") && !components[4].contains("Automated")){
                 //today date
-                Date c = Calendar.getInstance().getTime();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-                String todayDate = simpleDateFormat.format(c);
+                LocalDate today = LocalDate.now();
+                DateTimeFormatter simpleDateFormat =DateTimeFormatter.ofPattern("yyyy/MM/dd");
+                String todayDate = today.format(simpleDateFormat);
 
+                //Last update date
                 String last_upload = components[7];
 
                 if(todayDate !=  last_upload){
+                    LocalDate updateDate = LocalDate.parse(last_upload,simpleDateFormat);
+                    Period diffPeriod = Period.between(updateDate,today);       //first arg should be smaller
+                    int diff;
+
+                    int id = Integer.parseInt(components[0]);
+                    String type = components[1];
+                    String cat = components[2];
+                    String freq = "Automated";
+                    float amt = Float.parseFloat(components[4]);
+                    String entryDate = components[6];
+                    String desc = cat + " Automated of "+entryDate;
+
                     switch (components[3]){
                         case "Daily":
-                            System.out.println("ASDF");
+                            diff = diffPeriod.getDays();
+                            for(int i=0;i<diff;i++){
+                                updateDate = updateDate.plusDays(1);
+                                Transaction tempTransaction = new Transaction(type,cat,freq,amt,desc,updateDate.format(simpleDateFormat),updateDate.format(simpleDateFormat));
+                                addHandler(tempTransaction);
+                            }
                             break;
 
                         case "Weekly":
-                            System.out.println("ADF");
+                            diff = diffPeriod.getDays();
+                            if(diff>=7){
+                                for(int i=0;i<=diff;i+=7){
+                                    updateDate = updateDate.plusDays(7);
+                                    Transaction tempTransaction = new Transaction(type,cat,freq,amt,desc,updateDate.format(simpleDateFormat),updateDate.format(simpleDateFormat));
+                                    addHandler(tempTransaction);
+                                }
+                            }
                             break;
 
                         case "Monthly":
-                            System.out.println("ASF");
+                            diff = diffPeriod.getMonths();
+                            for(int i=0;i<diff;i++){
+                                updateDate = updateDate.plusMonths(1);
+                                Transaction tempTransaction = new Transaction(type,cat,freq,amt,desc,updateDate.format(simpleDateFormat),updateDate.format(simpleDateFormat));
+                                addHandler(tempTransaction);
+                            }
                             break;
 
                         default:
                             System.out.println("SDF");
                             break;
                     }
+                    updateHandler(id,type,cat,components[3],amt,components[5],components[6],updateDate.format(simpleDateFormat));
                 }
                 else{
                     continue;

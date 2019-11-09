@@ -29,11 +29,11 @@ public class EditBottomSheet extends BottomSheetDialogFragment {
     TextView title;
     Button cancel,addBtn,deleteBtn;
     RadioButton inc,exp;
-    RadioGroup radioGroup,freqRadio;
+    RadioGroup freqRadio;
     Spinner catSpinner;
     EditText amtText,description;
 
-    String id,type,cat,freq,desc,entryDate;
+    String id,type,cat,freq,desc,entryDate,updateDate;
     float amt;
     @Nullable
     @Override
@@ -63,6 +63,8 @@ public class EditBottomSheet extends BottomSheetDialogFragment {
             amt = Float.parseFloat(values.getString("amt"));
             desc = values.getString("desc");
             entryDate =values.getString("entryDate");
+            updateDate = values.getString("updateDate");
+
             SetEditableValues();
         }
 
@@ -119,11 +121,9 @@ public class EditBottomSheet extends BottomSheetDialogFragment {
                 }
                 amt = Float.parseFloat(amtText.getText().toString());
                 desc = description.getText().toString();
-                Date c = Calendar.getInstance().getTime();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-                String formattedDate = simpleDateFormat.format(c);
+
                 if(type.length()>0 || cat.length()>0 || freq.length() >0 || amt>0){
-                    db.updateHandler(Integer.parseInt(id),type,cat,freq,amt,desc,entryDate,formattedDate);
+                    db.updateHandler(Integer.parseInt(id),type,cat,freq,amt,desc,entryDate,updateDate);
                     dialog.cancel();
                     getActivity().recreate();
                 }

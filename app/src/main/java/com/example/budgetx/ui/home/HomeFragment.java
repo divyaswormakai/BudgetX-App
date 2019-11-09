@@ -56,6 +56,7 @@ public class HomeFragment extends BottomSheetDialogFragment {
             homeViewModel.AutomateTransactions(root);
             didAutomate =true;
         }
+
         //Load all transactions
         List transactions = homeViewModel.LoadTransactions(root);
 
@@ -92,6 +93,7 @@ public class HomeFragment extends BottomSheetDialogFragment {
                         args.putString("amt", components[4]);
                         args.putString("desc", components[5]);
                         args.putString("entryDate", components[6]);
+                        args.putString("updateDate", components[7]);
                         editSheet.setArguments(args);
 
                         editSheet.show(getFragmentManager(), "BottomSheet");

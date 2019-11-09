@@ -83,6 +83,7 @@ public class NotificationsFragment extends Fragment {
                         args.putString("amt", components[4]);
                         args.putString("desc", components[5]);
                         args.putString("entryDate", components[6]);
+                        args.putString("updateDate", components[7]);
                         editSheet.setArguments(args);
 
                         editSheet.show(getFragmentManager(), "BottomSheet");
