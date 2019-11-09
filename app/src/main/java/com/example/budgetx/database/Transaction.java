@@ -1,7 +1,5 @@
 package com.example.budgetx.database;
 
-import java.util.Date;
-
 public class Transaction {
     int transactionID;
     String transactionCategoryID;

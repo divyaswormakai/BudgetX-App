@@ -22,11 +22,8 @@ import com.example.budgetx.database.MyDBHandler;
 import com.example.budgetx.database.Transaction;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 
 public class ExpenseBottomSheet extends BottomSheetDialogFragment {
     View v;

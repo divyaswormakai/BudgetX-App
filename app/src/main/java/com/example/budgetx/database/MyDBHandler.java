@@ -5,24 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.text.format.DateUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 public class MyDBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION =1;
