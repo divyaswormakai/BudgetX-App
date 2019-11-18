@@ -3,4 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="incomeBtn">#286F19</color>
+    <color name="expenseBtn">#F44336</color>
+    <color name="editBtn">#C0C0C0</color>
+    <color name="deleteBtn">#BD2727</color>
+    <color name="incomeBackground">#66A75B</color>
+    <color name="expenseBackground">#BE5454</color>
 </resources>

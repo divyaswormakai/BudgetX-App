@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -59,6 +61,7 @@ public class HomeFragment extends BottomSheetDialogFragment {
 
         //Load all transactions
         List transactions = homeViewModel.LoadTransactions(root);
+        FrameLayout.LayoutParams flparams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
 
         for (Object tempObj  : transactions) {
             String tempString =tempObj.toString();
@@ -66,7 +69,13 @@ public class HomeFragment extends BottomSheetDialogFragment {
 
             LinearLayout ll = new LinearLayout(getContext());
             ll.setOrientation(LinearLayout.HORIZONTAL);
-
+            ll.setLayoutParams(flparams);
+            if(components[1].contains("Income")){
+                ll.setBackgroundColor(getResources().getColor(R.color.incomeBackground,null));
+            }
+            else{
+                ll.setBackgroundColor(getResources().getColor(R.color.expenseBackground,null));
+            }
             TextView tempt =  new TextView(getContext());
             tempt.setTextSize(TypedValue.COMPLEX_UNIT_SP,10);
             tempt.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -80,7 +89,7 @@ public class HomeFragment extends BottomSheetDialogFragment {
             //If the transaction is calculated transaction then do not make it editable
             if(!components[3].contains("Automated")){
                 Button editBtn = new Button(getContext());
-                editBtn.setText("Edit");
+                editBtn.setBackground(getResources().getDrawable(R.drawable.editbtn,null));
                 editBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -104,7 +113,7 @@ public class HomeFragment extends BottomSheetDialogFragment {
             }
 
             Button deleteBtn = new Button(getContext());
-            deleteBtn.setText("Delete");
+            deleteBtn.setBackground(getResources().getDrawable(R.drawable.deletebtn,null));
             deleteBtn.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
